@@ -1,0 +1,118 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Project",
+      "description": "Portfolio project document",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "Title of the project" },
+        "slug": { "type": "string", "description": "SEO-friendly identifier" },
+        "category": { "type": "string", "enum": ["Cybersecurity", "Web Dev", "Tools", "Other"], "description": "Category of project" },
+        "status": { "type": "string", "enum": ["Live", "In Progress", "Completed"], "description": "Status of development" },
+        "featured": { "type": "boolean", "description": "Should this project show up on focus views" },
+        "shortDescription": { "type": "string", "description": "TL;DR summarizing card info" },
+        "techStack": { "type": "array", "description": "List of technology names utilized" },
+        "fullWriteup": { "type": "string", "description": "Rich HTML content describing the project" },
+        "githubUrl": { "type": "string", "description": "Link to repository" },
+        "liveDemoUrl": { "type": "string", "description": "Link to running demo" },
+        "reportPdfUrl": { "type": "string", "description": "Link to documentation report" },
+        "thumbnailUrl": { "type": "string", "description": "Link to cover visual" },
+        "date": { "type": "string", "description": "Completed date" }
+      },
+      "required": ["title", "slug", "category", "status", "shortDescription", "techStack", "fullWriteup"]
+    },
+    "BlogPost": {
+      "title": "BlogPost",
+      "description": "Blog writeup or CTF writeup entry",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "Title of the blog post" },
+        "slug": { "type": "string", "description": "Post custom path suffix" },
+        "tags": { "type": "array", "description": "List of tags associated with post" },
+        "excerpt": { "type": "string", "description": "One-line summary descriptive text" },
+        "readTime": { "type": "string", "description": "Estimated time to read" },
+        "published": { "type": "boolean", "description": "Publish status" },
+        "content": { "type": "string", "description": "Rich HTML body containing details and code snippets" },
+        "date": { "type": "string", "description": "Post date string" }
+      },
+      "required": ["title", "slug", "tags", "excerpt", "content", "published"]
+    },
+    "Skill": {
+      "title": "Skill",
+      "description": "Skill details and proficiency levels",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "The name of the skill" },
+        "category": { "type": "string", "description": "Security Tools, Programming, Cloud/Infra, etc." },
+        "icon": { "type": "string", "description": "Emoji or URL identifier" },
+        "proficiency": { "type": "number", "description": "Number from 0 to 100" },
+        "order": { "type": "number", "description": "Sort ordering key" }
+      },
+      "required": ["name", "category", "icon", "proficiency", "order"]
+    },
+    "Certification": {
+      "title": "Certification",
+      "description": "Earned dynamic awards or cybersecurity licenses",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the certification" },
+        "issuer": { "type": "string", "description": "Authority issuing certificates" },
+        "dateEarned": { "type": "string", "description": "Month/Year of credential" },
+        "badgeUrl": { "type": "string", "description": "Image link representing visual layout" },
+        "verifyUrl": { "type": "string", "description": "External target verification web page" }
+      },
+      "required": ["name", "issuer", "dateEarned", "badgeUrl"]
+    },
+    "About": {
+      "title": "About",
+      "description": "Information about Elvis Kangwa Chanda",
+      "type": "object",
+      "properties": {
+        "bio": { "type": "string", "description": "Rich text HTML resume detail biography" },
+        "philosophy": { "type": "string", "description": "Philosophy text box statement" },
+        "timeline": { "type": "array", "description": "List of timeline milestones with year, title, description" }
+      },
+      "required": ["bio", "philosophy", "timeline"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Submissions from the Contact form",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of submitter" },
+        "email": { "type": "string", "description": "Email address" },
+        "subject": { "type": "string", "description": "Summary label of enquiry" },
+        "message": { "type": "string", "description": "Message context body" },
+        "read": { "type": "boolean", "description": "Status tracked in admin" },
+        "createdAt": { "type": "string", "description": "Time of submission" }
+      },
+      "required": ["name", "email", "subject", "message", "read"]
+    }
+  },
+  "firestore": {
+    "projects": {
+      "schema": { "$ref": "Project" },
+      "description": "List of portfolio items and projects"
+    },
+    "blogPosts": {
+      "schema": { "$ref": "BlogPost" },
+      "description": "List of articles and walkthrough write-ups"
+    },
+    "skills": {
+      "schema": { "$ref": "Skill" },
+      "description": "Listing of Elvis' engineering and security proficiencies"
+    },
+    "certifications": {
+      "schema": { "$ref": "Certification" },
+      "description": "Verified certifications and credentials portfolio"
+    },
+    "about": {
+      "schema": { "$ref": "About" },
+      "description": "A single document ('content') storing the general biographical information"
+    },
+    "messages": {
+      "schema": { "$ref": "Message" },
+      "description": "Submissions from the interactive contact form on the home page"
+    }
+  }
+}

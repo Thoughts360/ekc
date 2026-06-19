@@ -1,0 +1,6 @@
+{
+  "name": "Elvis Portfolio",
+  "description": "Cybersecurity Portfolio and Administration Dashboard for Elvis Kangwa Chanda",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

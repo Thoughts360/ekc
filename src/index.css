@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary-bg: #0D0D1A;
+  --color-secondary-bg: #1A1A2E;
+  --color-accent-amber: #E07B39;
+  --color-card-surface: #16213E;
+  --color-text-primary: #F0F0F0;
+  --color-text-secondary: #A0A0B0;
+  --color-border-custom: #2A2A4A;
+  --color-success-green: #4CAF50;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-space: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+body {
+  background-color: var(--color-primary-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-space);
+}
+
+.terminal-text {
+  font-family: var(--font-mono);
+}
+
+/* Custom glow on hover for CTA elements */
+.amber-glow:hover {
+  box-shadow: 0 0 15px rgba(224, 123, 57, 0.4);
+  border-color: var(--color-accent-amber);
+}
+
+/* Custom scrollbar matching dark amber aesthetic */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0D0D1A;
+}
+::-webkit-scrollbar-thumb {
+  background: #2A2A4A;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E07B39;
+}
+

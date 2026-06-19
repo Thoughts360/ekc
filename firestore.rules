@@ -1,0 +1,94 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Default system-wide deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    // Validator Helpers
+    function isValidProject(data) {
+      return data.title is string && data.title.size() <= 200
+        && data.slug is string && data.slug.size() <= 200
+        && (data.category == "Cybersecurity" || data.category == "Web Dev" || data.category == "Tools" || data.category == "Other")
+        && (data.status == "Live" || data.status == "In Progress" || data.status == "Completed")
+        && data.shortDescription is string && data.shortDescription.size() <= 1000;
+    }
+
+    function isValidBlogPost(data) {
+      return data.title is string && data.title.size() <= 200
+        && data.slug is string && data.slug.size() <= 200
+        && data.excerpt is string && data.excerpt.size() <= 1000;
+    }
+
+    function isValidSkill(data) {
+      return data.name is string && data.name.size() <= 100
+        && data.category is string && data.category.size() <= 100
+        && data.proficiency is int && data.proficiency >= 0 && data.proficiency <= 100;
+    }
+
+    function isValidCertification(data) {
+      return data.name is string && data.name.size() <= 200
+        && data.issuer is string && data.issuer.size() <= 200;
+    }
+
+    function isValidAbout(data) {
+      return data.bio is string && data.bio.size() <= 20000
+        && data.philosophy is string && data.philosophy.size() <= 5000;
+    }
+
+    function isValidMessage(data) {
+      return data.name is string && data.name.size() <= 100
+        && data.email is string && data.email.size() <= 150
+        && data.subject is string && data.subject.size() <= 200
+        && data.message is string && data.message.size() <= 5000;
+    }
+
+    // Collection Security Rules
+
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create, update: if isSignedIn() && isValidProject(incoming());
+      allow delete: if isSignedIn();
+    }
+
+    match /blogPosts/{postId} {
+      allow read: if true;
+      allow create, update: if isSignedIn() && isValidBlogPost(incoming());
+      allow delete: if isSignedIn();
+    }
+
+    match /skills/{skillId} {
+      allow read: if true;
+      allow create, update: if isSignedIn() && isValidSkill(incoming());
+      allow delete: if isSignedIn();
+    }
+
+    match /certifications/{certId} {
+      allow read: if true;
+      allow create, update: if isSignedIn() && isValidCertification(incoming());
+      allow delete: if isSignedIn();
+    }
+
+    match /about/{docId} {
+      allow read: if true;
+      allow create, update: if isSignedIn() && isValidAbout(incoming());
+      allow delete: if isSignedIn();
+    }
+
+    match /messages/{messageId} {
+      allow create: if isValidMessage(incoming());
+      allow read, update, delete: if isSignedIn();
+    }
+  }
+}
